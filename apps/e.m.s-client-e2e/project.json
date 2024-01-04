@@ -1,0 +1,30 @@
+{
+  "name": "e.m.s-client-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/e.m.s-client-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/e.m.s-client-e2e/cypress.config.ts",
+        "testingType": "e2e",
+        "devServerTarget": "e.m.s-client:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "e.m.s-client:serve:production"
+        },
+        "ci": {
+          "devServerTarget": "e.m.s-client:serve-static"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "implicitDependencies": ["e.m.s-client"],
+  "tags": []
+}
