@@ -1,0 +1,67 @@
+{
+  "name": "server-trpc",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/server-trpc/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/apps/server-trpc",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "apps/server-trpc/src/main.ts",
+        "tsConfig": "apps/server-trpc/tsconfig.app.json",
+        "assets": ["apps/server-trpc/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "server-trpc:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "server-trpc:build:development"
+        },
+        "production": {
+          "buildTarget": "server-trpc:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/server-trpc/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
