@@ -1,28 +1,30 @@
 import express from 'express';
-import {connctDB} from './configs/connctDB'
+import {sequelize} from './configs/connctDB'
+import {appRouter} from './trpc/queryTrpc'
+import * as trpcExpress from '@trpc/server/adapters/express';
 
-import {employees} from './configs/connctDB'
-
-const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 
 const app = express();
 
-app.get('/', (req, res) => {
-  const allEmployees = async ()=> {
-    const data = await employees.findAll()
-    return data
+app.use(
+  '/trpc',
+  trpcExpress.createExpressMiddleware({
+    router:appRouter
+  })
+)
+
+
+app.listen(port, async() => {
+  console.log(`listen in port: ${port}`);
+
+  try {
+    await sequelize.authenticate()
+    console.log('Database connected!');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
   }
-  res.send(allEmployees)
-});
+})
 
 
-const start = async () => {
-  const db = await connctDB()
 
-  app.listen(port, () => {
-    console.log(`listen in port: ${port}`);
-  });
-}
-
-start()
