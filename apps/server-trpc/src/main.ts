@@ -6,6 +6,7 @@ import * as trpcExpress from '@trpc/server/adapters/express';
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 
 const app = express();
+app.use(express.json());
 
 app.use(
   '/trpc',
@@ -25,6 +26,3 @@ app.listen(port, async() => {
     console.error('Unable to connect to the database:', error);
   }
 })
-
-
-

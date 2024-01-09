@@ -1,7 +1,7 @@
 import {DataTypes} from 'sequelize'
 import {sequelize} from '../configs/connctDB'
 
-export const employee = sequelize.define('employees', {
+ export const employee = sequelize.define('employees', {
     id: {
         type: DataTypes.UUID,
         primaryKey: true,
