@@ -1,17 +1,21 @@
-import {employee} from '../models/employee'
+import { log } from 'console';
+// import {employee} from '../models/employee'
+import {sequelize} from '../configs/connctDB'
 import {router, publicProcedure} from './trpc'
 import { z } from "zod";
 
 export const appRouter = router({
     allEmployees:publicProcedure.query(async () => {
-        const employees = await employee.findAll()
-        return employees
+        const data = await sequelize.models.employee.findAll()
+        .then((employees) => {return employees})
+        // console.log(data);
+        return data
     }),
     employeeById: publicProcedure
     .input(z.string())
-    .query(async(id) => {
-        const {input} = id;
-        const employeeId = await employee.findByPk(input)
+    .query(async(firstName) => {
+        const {input} = firstName;
+        const employeeId = await sequelize.models.employee.findByPk(input)
         return employeeId
     })
 })
