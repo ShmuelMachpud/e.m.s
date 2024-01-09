@@ -9,3 +9,9 @@ INSERT INTO employees (firstName, lastName)
 	('shmuel', 'machpud'),
 	('sara', 'machpud')
 	
+
+ALTER TABLE employees
+ADD COLUMN createdAt date;
+
+ALTER TABLE employees
+ADD COLUMN updatedAt date;
