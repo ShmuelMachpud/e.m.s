@@ -8,6 +8,8 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {httpBatchLink} from '@trpc/client'
 import {trpc} from '../utils/trpc'
 
+import AllEmployes from '../pages/Index'
+
 
 function App() {
 
@@ -24,6 +26,7 @@ function App() {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
+        <AllEmployes/>
         <Login/>
       </QueryClientProvider>
     </trpc.Provider>

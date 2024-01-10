@@ -1,13 +1,15 @@
 import {trpc} from '../utils/trpc'
 
-import React from 'react'
+import {useState} from 'react'
 
-export default function Index() {
+export default async function Index() {
 
-    const employees = trpc.allEmployees.useQuery('shmuel')
+
+     const employees = trpc.allEmployees.useQuery()
+
   return (
     <div>
-        {employees.data.}
+        {}
     </div>
   )
 }
