@@ -1,15 +1,17 @@
-import {trpc} from '../utils/trpc'
+import {  trpc,
+  type ReactQueryOptions,
+  type RouterInputs,
+  type RouterOutputs,} from '../utils/trpc'
 
-import {useState} from 'react'
+export default function Index() {
 
-export default async function Index() {
+   const {data} =  trpc.allEmployees.useQuery();
 
-
-     const employees = trpc.allEmployees.useQuery()
-
-  return (
-    <div>
-        {}
-    </div>
-  )
+   if(data)console.log(data);
+   
+   return data?.map((employee) => {
+    return(
+      <div>{employee.firstName}</div>
+    )
+   })
 }
