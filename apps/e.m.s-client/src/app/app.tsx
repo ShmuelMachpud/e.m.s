@@ -8,8 +8,7 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {httpBatchLink} from '@trpc/client'
 import {trpc} from '../utils/trpc'
 
-import AllEmployes from '../pages/Index'
-
+import AllEmployees from '../pages/Index'
 
 function App() {
 
@@ -24,14 +23,18 @@ function App() {
     })
   )
   return (
-    <trpc.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>
-        <AllEmployes/>
+    <div>
+     <trpc.Provider client={trpcClient} queryClient={queryClient}>
+       <QueryClientProvider client={queryClient}>
+        <AllEmployees/>
         <Login/>
-      </QueryClientProvider>
-    </trpc.Provider>
+       </QueryClientProvider>
+     </trpc.Provider>
+    </div>
   )
 
 }
+
+
 
 export default App;
