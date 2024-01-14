@@ -1,14 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import styles from './app.module.css';
 
-import Login from '../pages/Login'
-
 import {useState, useEffect} from 'react'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {httpBatchLink} from '@trpc/client'
 import {trpc} from '../utils/trpc'
 
-import AllEmployees from '../pages/Index'
+import Router from '../routes/Router'
 
 function App() {
 
@@ -26,8 +24,7 @@ function App() {
     <div>
      <trpc.Provider client={trpcClient} queryClient={queryClient}>
        <QueryClientProvider client={queryClient}>
-        <AllEmployees/>
-        <Login/>
+          <Router/>
        </QueryClientProvider>
      </trpc.Provider>
     </div>
