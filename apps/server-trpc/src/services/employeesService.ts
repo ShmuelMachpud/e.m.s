@@ -11,3 +11,13 @@ export const getAllEmployees = async () =>{
         throw new Error(`fetch all employees errror: ${error}`)
     }
 }
+
+export const addEmployee = async()=>{
+    try{
+        await Dal.addEmployee()
+        return ('Hagai was saved to the database!')
+    } catch(error) {
+        throw new Error(`add employee errror: ${error}`)
+    }
+     
+}

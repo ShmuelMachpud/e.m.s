@@ -5,5 +5,6 @@ export const appRouter = router({
     allEmployees: publicProcedure.query(employeesService.getAllEmployees),
     employeeById: publicProcedure.query(async() =>{
 
-    })
+    }),
+    addEmployee: publicProcedure.query(employeesService.addEmployee)
   })
