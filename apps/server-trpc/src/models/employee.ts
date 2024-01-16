@@ -1,36 +1,37 @@
 import {DataTypes} from 'sequelize'
 import {sequelize} from '../configs/connectDB'
-// import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 
-export const Employee = sequelize.define('employees', {
+export const Employee = sequelize.define('employee', {
     id: {
         type: DataTypes.UUID,
         primaryKey: true,
         allowNull: false,
-        autoIncrement: true,
-        // defaultValue: () => uuidv4()
+        // autoIncrement: true,
+        defaultValue: () => uuidv4()
     },
-    firstName: {
+    first_name: {
         type: DataTypes.STRING,
         allowNull: false,
     },
 
-    lastName: {
+    last_name: {
         type: DataTypes.STRING,
         allowNull: false,
     },
 
 },{
-    createdAt:false,
-    updatedAt: false
+    timestamps: false
 });
 
-console.log(Employee === sequelize.models.Employee);
+
+
+console.log('is true:',(Employee === sequelize.models.employee));
 
 
 export const syncDatabase = async () => {
-    await Employee.sync({ alter: true });
+    await Employee.sync({});
     try {
       await Employee.sync();
       console.log('Database synchronized!');

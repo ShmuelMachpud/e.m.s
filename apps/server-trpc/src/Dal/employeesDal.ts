@@ -3,10 +3,27 @@ import {EmployeeType} from '../types/types'
 
 export const getAllEmployees =async() : Promise<EmployeeType[]> =>{
     const allEmployees = await Employee.findAll();
+    
+
+    console.log(allEmployees);
+
     return allEmployees.map((employee:EmployeeType | any) => ({
         id: employee.id,
-        firstName: employee.firstName,
-        lastName: employee.lastName
-
+        first_name: employee.first_name,
+        last_name: employee.last_name
     }));
 }
+
+
+export const addEmployee = async()=> {
+        const hagai = Employee.build({
+            first_name: 'Hagai',
+            last_name: 'Morad',
+        });
+        console.log(hagai instanceof Employee);
+        console.log(hagai);
+        
+        await hagai.save()
+        console.log('Hagai was saved to the database!');
+}
+

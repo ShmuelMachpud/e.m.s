@@ -15,7 +15,7 @@ export default function TableAllEmployees() {
     },[data])
 
     const hendelFilter = (input:string)=>{
-        const dataFilter = data?.filter((man)=> man.firstName.includes(input))
+        const dataFilter = data?.filter((man)=> man.first_name.includes(input))
         setEmployeesList(dataFilter)
     }
     
@@ -116,7 +116,7 @@ export default function TableAllEmployees() {
                     {employeesList?.map((man)=> {
                         return(
                         <tr className="border-b dark:border-gray-700" key={man.id}>
-                            <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{`${man.firstName} ${man.lastName}`}</th>
+                            <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{`${man.first_name} ${man.last_name}`}</th>
                             <td className="px-4 py-3">{man.id}</td>
                             <td className="px-4 py-3">Apple</td>
                             <td className="px-4 py-3">300</td>
