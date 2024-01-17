@@ -1,10 +1,13 @@
 import { DataTypes} from 'sequelize'
 import {sequelize} from '../configs/connectDB'
+import { v4 as uuidv4 } from 'uuid';
 
-export const User = sequelize.define('users', {
+export const User = sequelize.define('user', {
     id:{
         type:DataTypes.UUID,
+        primaryKey: true,
         allowNull: false,
+        defaultValue: () => uuidv4()
     },
     first_name: {
         type: DataTypes.STRING,
@@ -25,18 +28,6 @@ export const User = sequelize.define('users', {
     }
 },{
     timestamps: false
-})
-// export const createUser = async()=>{
-//     const sara = User.build({
-//         first_name: 'Sara',
-//         last_name: 'Machpud',
-//         email: 'Sm0529514802',
-//         password: 'Sara2023',
-//     });
-//     console.log(sara instanceof User);
-//     console.log(sara);
-    
-//     await sara.save()
-//     console.log('Sara was saved to the database!');
-// }
-console.log('is:',(sequelize.models));
+});
+
+console.log('is true:',(User === sequelize.models.user));

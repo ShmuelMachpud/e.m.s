@@ -4,8 +4,8 @@ import config from 'config'
 const key = config.get('JWT_KEY')
 
 export const generateAuthToken = (user)=>{
-    const {_id, isAdmin, isBusiness} = user;
-    const token = jwt.sing({_id, isBusiness,isAdmin}, key)
+    const {id, isAdmin, isBusiness} = user;
+    const token = jwt.sing({id, isBusiness,isAdmin}, key)
     return token
 }
 

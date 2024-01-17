@@ -21,3 +21,14 @@ export const connectDatabase = async () => {
       throw error; // Propagate the error to the caller
     }
   };
+
+  export const syncDatabase = async () => {
+    await sequelize.sync({});
+    try {
+      await sequelize.sync();
+      console.log('Database synchronized!');
+    } catch (error) {
+      console.error('Error synchronizing the database:', error);
+      throw error; // Propagate the error to the caller
+    }
+  };

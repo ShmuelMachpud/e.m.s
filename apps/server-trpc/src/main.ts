@@ -1,7 +1,7 @@
 import express from 'express';
 import * as trpcExpress from '@trpc/server/adapters/express';
-import {connectDatabase} from './configs/connectDB'
-import {syncDatabase} from './models/employee'
+import {connectDatabase, syncDatabase} from './configs/connectDB'
+// import {syncDatabase} from './models/employee'
 import {appRouter} from './router/trpcRouter'
 import cors from 'cors'
 

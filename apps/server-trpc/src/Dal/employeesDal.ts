@@ -1,7 +1,8 @@
 import {Employee} from '../models/employee'
 import {EmployeeType} from '../types/types'
+import {sequelize} from '../configs/connectDB'
 
-export const getAllEmployees =async() : Promise<EmployeeType[]> =>{
+export const getAllEmployees =async(): Promise<EmployeeType[]>  =>{
     const allEmployees = await Employee.findAll();
     
 

@@ -30,14 +30,14 @@ export const Employee = sequelize.define('employee', {
 console.log('is true:',(Employee === sequelize.models.employee));
 
 
-export const syncDatabase = async () => {
-    await Employee.sync({});
-    try {
-      await Employee.sync();
-      console.log('Database synchronized!');
-    } catch (error) {
-      console.error('Error synchronizing the database:', error);
-      throw error; // Propagate the error to the caller
-    }
-  };
+// export const syncDatabase = async () => {
+//     await Employee.sync({});
+//     try {
+//       await Employee.sync();
+//       console.log('Database synchronized!');
+//     } catch (error) {
+//       console.error('Error synchronizing the database:', error);
+//       throw error; // Propagate the error to the caller
+//     }
+//   };
 
