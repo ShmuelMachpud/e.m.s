@@ -28,3 +28,13 @@ export const addUser = async(newUser) => {
     
     return newUser.input.first_name
 }
+
+export const userByEmail = async(email):Promise<UserType |any> => {
+    const user = await User.findByPk(email)
+    if(!user){
+        throw new Error ('User not found!')
+    } else{
+        return(user.dataValues);
+        
+    }
+}

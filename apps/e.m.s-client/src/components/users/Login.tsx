@@ -1,13 +1,46 @@
-export default function Login() {
+import {trpc} from '../../utils/trpc'
+import React,{useEffect, useState} from 'react';
+import { UserType } from 'apps/server-trpc/src/types/types'
+import { useNavigate } from 'react-router-dom'
+import TRPCClientError from 'trpc/lib/src/error'
+
+import { error, log } from 'console';
+
+export default function Login(){
+
+  const [user, setUser] = useState<UserType>()
+  const navigate = useNavigate()
+  const userMutation =  trpc.userByEmail.useMutation()
+
+  useEffect(()=> {
+    setUser(userMutation.data)
+    if(user){
+      alert(`Hi ${user.first_name}, you connected successfully`);
+      console.log(`Hi ${user.first_name}, you connected successfully`);
+      localStorage.setItem('erp_token', user.email)
+      navigate('/')
+    }
+
+    
+  },[userMutation])
 
   const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget);
-    const email = data.get('email')
-    const password = data.get('password')
+    const email = data.get('email') as string
+    const password = data.get('password') as string
     console.log(email,password);
-    
+    try {
+      await userMutation.mutate({email, password})
+      if(userMutation.isSuccess)
+      console.log(userMutation.isSuccess);
+  
+    }catch(error) {
+      alert(`Error fetching user: ${error}`);
+      console.error('Error fetching user:', error);
+    }
   }
+
     return (
       <>
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -23,7 +56,7 @@ export default function Login() {
           </div>
   
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" onSubmit={(e)=> handleSubmit(e)} method="POST">
+            <form className="space-y-6" onSubmit={handleSubmit} method="POST">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                   Email address

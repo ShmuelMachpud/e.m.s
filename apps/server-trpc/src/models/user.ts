@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 export const User = sequelize.define('user', {
     id:{
         type:DataTypes.UUID,
-        primaryKey: true,
         allowNull: false,
         defaultValue: () => uuidv4()
     },
@@ -19,6 +18,7 @@ export const User = sequelize.define('user', {
         allowNull: false,
     },
     email: {
+        primaryKey: true,
         type: DataTypes.STRING,
         allowNull: false,
     },

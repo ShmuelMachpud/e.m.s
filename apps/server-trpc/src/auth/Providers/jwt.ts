@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken'
 import config from 'config'
 
-const key = config.get('JWT_KEY')
+const key = config.get("JWT_KEY")
 
 export const generateAuthToken = (user)=>{
     const {id, isAdmin, isBusiness} = user;
-    const token = jwt.sing({id, isBusiness,isAdmin}, key)
+    const token = jwt.sign({id, isBusiness,isAdmin}, key)
     return token
 }
 
