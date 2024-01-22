@@ -3,6 +3,7 @@ import * as Dal from '../Dal/usersDal'
 import {generateAuthToken, verifyToken} from '../auth/Providers/jwt'
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from 'config'
+import { decode } from 'punycode';
 
 
 export const getAllUsers = async() => {
@@ -40,13 +41,14 @@ export const userByEmail = async(user) => {
             if (token) {
                 try{
                     const decoded = verifyToken(token)
-                    console.log(decoded)
-                    user.userId = (decoded as JwtPayload).userId;
+                    console.log(`decoded: ${decoded.id}`)
+                    // localStorage.setItem('jwt_key', decoded)
+                    user.userId = (decoded as JwtPayload);
+                    return ({user, token, decoded})
                 } catch(error){
                     console.log(error);
                 }
             }
-            return user
         }else {
             throw new Error(`The password is incorrect`)
         }

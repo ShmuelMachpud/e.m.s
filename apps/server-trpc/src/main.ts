@@ -3,6 +3,7 @@ import * as trpcExpress from '@trpc/server/adapters/express';
 import {connectDatabase, syncDatabase} from './configs/connectDB'
 // import {syncDatabase} from './models/employee'
 import {appRouter} from './router/trpcRouter'
+import {context} from './trpc/context'
 import cors from 'cors'
 
 
@@ -22,7 +23,8 @@ app.use(cors());
 app.use(
   '/trpc',
   trpcExpress.createExpressMiddleware({
-    router:appRouter
+    router:appRouter,
+    createContext: context
   })
 )
 

@@ -4,6 +4,7 @@ import RegisterPage from '../pages/RegisterPage'
 import LoginPage from '../pages/LoginPage'
 import HomePage from '../pages/HomePage'
 import EditEmployeeData from '../components/employeeData/EditEmployeeData'
+import AllUsers from '../pages/AllUsers'
 
 export default function Router() {
   return (
@@ -12,6 +13,7 @@ export default function Router() {
         <Route path='/Register' element={<RegisterPage/>}></Route>
         <Route path='/Login' element={<LoginPage/>}></Route>
         <Route path='/EditEmployeeData' element={<EditEmployeeData/>}></Route>
+        <Route path='/AllUsers' element={<AllUsers/>}></Route>
     </Routes>
   )
 }

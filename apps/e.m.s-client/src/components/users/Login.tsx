@@ -13,11 +13,13 @@ export default function Login(){
   const userMutation =  trpc.userByEmail.useMutation()
 
   useEffect(()=> {
-    setUser(userMutation.data)
+    setUser(userMutation.data?.user)
     if(user){
       alert(`Hi ${user.first_name}, you connected successfully`);
       console.log(`Hi ${user.first_name}, you connected successfully`);
-      localStorage.setItem('erp_token', user.email)
+      localStorage.setItem('erp_token', userMutation.data?.token)
+      console.log(`token: ${localStorage.getItem('erp_token')}`);
+      
       navigate('/')
     }
 

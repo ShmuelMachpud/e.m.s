@@ -1,0 +1,26 @@
+import {useState, useEffect} from 'react'
+import {trpc} from '../utils/trpc'
+import {UserType} from '../../../server-trpc/src/types/types'
+
+export default function AllUsers() {
+
+    const [users, setUsers] = useState<UserType[]>()
+    const token = localStorage.getItem('erp_token')
+    const {data} = trpc.admin.allUsers.useQuery({token:token})
+
+    useEffect(()=>{
+        setUsers(data)
+    },[data])
+  return (
+    <div>
+        {users?.map((user) =>{
+            return(
+                <div key={user.id}>
+                    <h1>{user.first_name}</h1>
+                    <h2>{user.id}</h2>
+                </div>
+            )
+        })}
+    </div>
+  )
+}
