@@ -1,30 +1,25 @@
 import * as trpcNext from '@trpc/server/adapters/next';
-import type { CreateNextContextOptions } from '@trpc/server/adapters/next';
+import type { CreateExpressContextOptions } from '@trpc/server/adapters/express';
 import {verifyToken} from '../auth/Providers/jwt'
+import { Mutation } from '@tanstack/react-query';
 
-export const context = async (opts: CreateNextContextOptions) =>{
+export const createContext = async ({req, res}:CreateExpressContextOptions) =>{
 
-    const auth =  (req)=> {
-        try {
-            const tokenFromClient =  req.query.input
-            console.log(tokenFromClient);
-            
-            if(!tokenFromClient) throw new Error('Authentication Error: Please Login');
-
-            // const userInfo = verifyToken(tokenFromClient);
-            // if(!userInfo) throw new Error('Authentication Error: Unauthorize user');
-
-            return tokenFromClient
-        } catch(error){
-            return 'eee'
+    const auth = () => {
+        // console.log(`req: ${req}`);
+        if (!req.headers.authorization){
+            return null
         }
+        // console.log(req.headers.authorization);
+        
+        return req.headers.authorization
     }
-
-    const user =  await auth(opts.req)
-
+    const user = await auth()
+    console.log(user);
+    
     return {
-        user
+       user
     }
 }
 
-export type Context = Awaited<ReturnType<typeof context>>;
+export type Context = Awaited<ReturnType<typeof createContext>>;

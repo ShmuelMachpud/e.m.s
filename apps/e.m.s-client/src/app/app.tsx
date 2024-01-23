@@ -16,6 +16,9 @@ function App() {
       links: [
         httpBatchLink({
           url: 'http://localhost:3000/trpc',
+          headers: () => ({
+            authorization: 'secret',
+          })
         })
       ]
     })

@@ -3,8 +3,10 @@ import * as trpcExpress from '@trpc/server/adapters/express';
 import {connectDatabase, syncDatabase} from './configs/connectDB'
 // import {syncDatabase} from './models/employee'
 import {appRouter} from './router/trpcRouter'
-import {context} from './trpc/context'
+import {createContext} from './trpc/context'
 import cors from 'cors'
+import { json } from 'stream/consumers';
+import { formToJSON } from 'axios';
 
 
 export type AppRouter = typeof appRouter;
@@ -24,7 +26,7 @@ app.use(
   '/trpc',
   trpcExpress.createExpressMiddleware({
     router:appRouter,
-    createContext: context
+    createContext,
   })
 )
 
