@@ -9,7 +9,6 @@ import { decode } from 'punycode';
 export const getAllUsers = async() => {
     try {
         const allUsers = await Dal.getAllUsers();
-        console.log(allUsers);
         if(!allUsers){
             throw new Error(`data not found`)
         }

@@ -11,17 +11,14 @@ export const router = t.router
 
 export const publicProcedure = t.procedure
 
-// export const adminProcedure = t.procedure.use((opts) => {
-//     console.log(`opts ${opts.ctx.user}`);
+export const adminProcedure = t.procedure.use(async function (opts) {
     
-//     // const ctx = opts.ctx.user
-//     // // console.log(`opts:${opts}`);
-//     // console.log(ctx);
-    
-//     // if (!ctx) {
-//     //     throw new TRPCError({ code: 'UNAUTHORIZED' });
-//     // }
+    const {ctx} = opts
+  
+    if (!ctx.user) {
+        throw new TRPCError({ code: 'UNAUTHORIZED' });
+    }
 
-//     return opts.next()
-// })
+    return opts.next()
+})
 

@@ -6,8 +6,10 @@ import { Mutation } from '@tanstack/react-query';
 export const createContext = async ({req, res}:CreateExpressContextOptions) =>{
 
     const auth = () => {
-        // console.log(`req: ${req}`);
-        if (!req.headers.authorization){
+        
+        if (req.headers.authorization === 'null'){
+            console.log(`token: ${req.headers.authorization}`);
+            
             return null
         }
         // console.log(req.headers.authorization);
@@ -15,7 +17,7 @@ export const createContext = async ({req, res}:CreateExpressContextOptions) =>{
         return req.headers.authorization
     }
     const user = await auth()
-    console.log(user);
+    console.log(`token: ${user}`);
     
     return {
        user

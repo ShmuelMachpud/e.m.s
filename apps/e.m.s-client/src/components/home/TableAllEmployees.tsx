@@ -8,16 +8,33 @@ export default function TableAllEmployees() {
 
     const navigate = useNavigate()
     const [employeesList, setEmployeesList] = useState<EmployeeType[]>()
-    const {data} = trpc.allEmployees.useQuery()
 
-    useEffect(()=> {
-        setEmployeesList(data)
-    },[data])
+        // const {data} = trpc.allEmployees.useQuery()
+        const getData = () =>{
+            try{
+                const {data} = trpc.allEmployees.useQuery()
+                return data
+            } catch{
+                navigate('/Login')
+            }
+        }
 
-    const hendelFilter = (input:string)=>{
-        const dataFilter = data?.filter((man)=> man.first_name.includes(input))
-        setEmployeesList(dataFilter)
-    }
+        const emp = getData()
+        useEffect(()=> {
+            setEmployeesList(emp)
+        },[emp])
+
+
+        const hendelFilter = (input:string)=>{
+            const dataFilter = emp?.filter((man)=> man.first_name.includes(input))
+            setEmployeesList(dataFilter)
+        }
+ 
+        // navigate('/Login')
+
+
+
+
     
 
     

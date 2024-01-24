@@ -17,7 +17,7 @@ function App() {
         httpBatchLink({
           url: 'http://localhost:3000/trpc',
           headers: () => ({
-            authorization: 'secret',
+            authorization: localStorage.getItem('erp_token') || 'null',
           })
         })
       ]

@@ -4,7 +4,6 @@ import {User} from '../models/user'
 
 export const getAllUsers = async(): Promise<UserType[]> => {
     const allUsers = await User.findAll();
-    console.log(allUsers);
     
     return allUsers.map((user:UserType | any)=> ({
         id: user.id,

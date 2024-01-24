@@ -4,9 +4,6 @@ import {sequelize} from '../configs/connectDB'
 
 export const getAllEmployees =async(): Promise<EmployeeType[]>  =>{
     const allEmployees = await Employee.findAll();
-    
-
-    console.log(allEmployees);
 
     return allEmployees.map((employee:EmployeeType | any) => ({
         id: employee.id,

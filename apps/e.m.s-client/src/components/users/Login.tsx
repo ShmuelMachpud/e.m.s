@@ -19,6 +19,7 @@ export default function Login(){
       console.log(`Hi ${user.first_name}, you connected successfully`);
       localStorage.setItem('erp_token', userMutation.data?.token)
       console.log(`token: ${localStorage.getItem('erp_token')}`);
+
       
       navigate('/')
     }
