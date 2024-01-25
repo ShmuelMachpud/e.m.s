@@ -2,9 +2,6 @@ import {trpc} from '../../utils/trpc'
 import React,{useEffect, useState} from 'react';
 import { UserType } from 'apps/server-trpc/src/types/types'
 import { useNavigate } from 'react-router-dom'
-import TRPCClientError from 'trpc/lib/src/error'
-
-import { error, log } from 'console';
 
 export default function Login(){
 
@@ -15,16 +12,12 @@ export default function Login(){
   useEffect(()=> {
     setUser(userMutation.data?.user)
     if(user){
-      alert(`Hi ${user.first_name}, you connected successfully`);
       console.log(`Hi ${user.first_name}, you connected successfully`);
       localStorage.setItem('erp_token', userMutation.data?.token)
       console.log(`token: ${localStorage.getItem('erp_token')}`);
-
-      
       navigate('/')
     }
 
-    
   },[userMutation])
 
   const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
@@ -32,16 +25,9 @@ export default function Login(){
     const data = new FormData(event.currentTarget);
     const email = data.get('email') as string
     const password = data.get('password') as string
-    console.log(email,password);
-    try {
-      await userMutation.mutate({email, password})
-      if(userMutation.isSuccess)
-      console.log(userMutation.isSuccess);
-  
-    }catch(error) {
-      alert(`Error fetching user: ${error}`);
-      console.error('Error fetching user:', error);
-    }
+
+    userMutation.mutate({email, password})
+
   }
 
     return (
@@ -82,7 +68,7 @@ export default function Login(){
                     Password
                   </label>
                   <div className="text-sm">
-                    <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                    <a href="/PasswordRecoveryPage" className="font-semibold text-indigo-600 hover:text-indigo-500">
                       Forgot password?
                     </a>
                   </div>
@@ -96,6 +82,7 @@ export default function Login(){
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
                 </div>
+                <p className="font-semibold text-red-600 hover:text-red-500">{userMutation.error?.message}</p>
               </div>
   
               <div>
@@ -109,8 +96,8 @@ export default function Login(){
   
             <p className="mt-10 text-center text-sm text-gray-500">
               Not a member?{' '}
-              <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-                Start a 14 day free trial
+              <a href="/Register" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+              Click here to register
               </a>
             </p>
           </div>

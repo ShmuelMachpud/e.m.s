@@ -2,41 +2,28 @@ import {useState, useEffect} from 'react'
 import {trpc} from '../../utils/trpc'
 import { useNavigate } from 'react-router-dom'
 import { EmployeeType } from 'apps/server-trpc/src/types/types'
+import { error } from 'console'
+import { any, date } from 'zod'
 
-
-export default function TableAllEmployees() {
+interface Props{
+    data: EmployeeType[]
+}
+export default function TableAllEmployees(props:Props) {
 
     const navigate = useNavigate()
     const [employeesList, setEmployeesList] = useState<EmployeeType[]>()
+    const data = props.data
+    console.log(data);
 
-        // const {data} = trpc.allEmployees.useQuery()
-        const getData = () =>{
-            try{
-                const {data} = trpc.allEmployees.useQuery()
-                return data
-            } catch{
-                navigate('/Login')
-            }
-        }
-
-        const emp = getData()
-        useEffect(()=> {
-            setEmployeesList(emp)
-        },[emp])
+    useEffect(()=> {
+        setEmployeesList(props.data)
+    },[data])
 
 
-        const hendelFilter = (input:string)=>{
-            const dataFilter = emp?.filter((man)=> man.first_name.includes(input))
-            setEmployeesList(dataFilter)
-        }
- 
-        // navigate('/Login')
-
-
-
-
-    
-
+    const hendelFilter = (input:string)=>{
+        const dataFilter = props.data?.filter((man)=> man.first_name.includes(input))
+        setEmployeesList(dataFilter)
+    }
     
   return (
     <div>
@@ -58,18 +45,15 @@ export default function TableAllEmployees() {
                     </form>
                 </div>
                 <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                    <button type="button" className="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                    {/* <button type="button" className="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
                         <svg className="h-3.5 w-3.5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path clipRule="evenodd" fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                         </svg>
                         Add product
-                    </button>
+                    </button> */}
                     <div className="flex items-center space-x-3 w-full md:w-auto">
-                        <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown" className="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" type="button">
-                            <svg className="-ml-1 mr-1.5 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <path clipRule="evenodd" fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                            </svg>
-                            Actions
+                        <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" type="button" onClick={()=> navigate('')}>
+                            Add employee
                         </button>
                         <div id="actionsDropdown" className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                             <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="actionsDropdownButton">
@@ -134,10 +118,10 @@ export default function TableAllEmployees() {
                         return(
                         <tr className="border-b dark:border-gray-700" key={man.id}>
                             <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{`${man.first_name} ${man.last_name}`}</th>
-                            <td className="px-4 py-3">{man.id}</td>
-                            <td className="px-4 py-3">Apple</td>
-                            <td className="px-4 py-3">300</td>
-                            <td className="px-4 py-3">$2999</td>
+                            <td className="px-4 py-3">{man.phone_number}</td>
+                            <td className="px-4 py-3">{man.email}</td>
+                            <td className="px-4 py-3">{man.branch_number}</td>
+                            <td className="px-4 py-3">{man.role}</td>
                         </tr>
 
                         )

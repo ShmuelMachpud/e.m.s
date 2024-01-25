@@ -20,6 +20,23 @@ export const Employee = sequelize.define('employee', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    email:{
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    phone_number:{
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    branch_number:{
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    role: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+
 
 },{
     timestamps: false

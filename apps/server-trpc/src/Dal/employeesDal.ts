@@ -8,7 +8,11 @@ export const getAllEmployees =async(): Promise<EmployeeType[]>  =>{
     return allEmployees.map((employee:EmployeeType | any) => ({
         id: employee.id,
         first_name: employee.first_name,
-        last_name: employee.last_name
+        last_name: employee.last_name,
+        email: employee.email,
+        phone_number: employee.phone_number,
+        branch_number: employee.branch_number,
+        role: employee.role
     }));
 }
 
