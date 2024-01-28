@@ -17,15 +17,17 @@ export const getAllEmployees =async(): Promise<EmployeeType[]>  =>{
 }
 
 
-export const addEmployee = async()=> {
-        const hagai = Employee.build({
-            first_name: 'Hagai',
-            last_name: 'Morad',
+export const addEmployee = async(newUser)=> {
+        const createNewUser = Employee.build({
+            first_name: newUser.input.first_name,
+            last_name: newUser.input.first_name ,
+            email: newUser.input.email ,
+            phone_number: newUser.input.phone_number ,
+            branch_number: newUser.input. branch_number ,
+            role: newUser.input.role ,
         });
-        console.log(hagai instanceof Employee);
-        console.log(hagai);
         
-        await hagai.save()
+        await createNewUser.save()
         console.log('Hagai was saved to the database!');
 }
 

@@ -12,10 +12,10 @@ export const getAllEmployees = async () =>{
     }
 }
 
-export const addEmployee = async()=>{
+export const addEmployee = async(newUser)=>{
     try{
-        await Dal.addEmployee()
-        return ('Hagai was saved to the database!')
+        await Dal.addEmployee(newUser)
+        return (`${newUser.last_name} was saved to the database!`)
     } catch(error) {
         throw new Error(`add employee errror: ${error}`)
     }

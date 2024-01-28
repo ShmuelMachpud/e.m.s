@@ -7,12 +7,13 @@ export const createContext = async ({req, res}:CreateExpressContextOptions) =>{
 
     const auth = () => {
         
-        if (req.headers.authorization === 'null'){
+        const tokenFromClient = req.headers.authorization
+        if ( tokenFromClient === 'null'){
             console.log(`token: ${req.headers.authorization}`);
             
             return null
         }
-        // console.log(req.headers.authorization);
+        console.log(req.headers.authorization);
         
         return req.headers.authorization
     }

@@ -11,7 +11,15 @@ export const appRouter = router({
   
     allEmployees: adminProcedure.query(employeesService.getAllEmployees),
 
-    addEmployee: publicProcedure.query(employeesService.addEmployee),
+    addEmployee: adminProcedure.input(z.object({
+      first_name: z.string(),
+      last_name: z.string(),
+      email: z.string(),
+      phone_number: z.number(),
+      branch_number: z.number(),
+      role: z.string(),
+    }))
+    .mutation((newUser) => employeesService.addEmployee(newUser)),
 
     userByEmail: publicProcedure.input(z.object({
       email: z.string(),
