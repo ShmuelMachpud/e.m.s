@@ -5,20 +5,9 @@ import { useNavigate } from 'react-router-dom'
 
 export default function Login(){
 
-  const [user, setUser] = useState<UserType>()
   const navigate = useNavigate()
-  const userMutation =  trpc.userByEmail.useMutation()
+  const userMutation =  trpc.login.useMutation()
 
-  useEffect(()=> {
-    setUser(userMutation.data?.user)
-    if(user){
-      console.log(`Hi ${user.first_name}, you connected successfully`);
-      localStorage.setItem('erp_token', userMutation.data?.token)
-      console.log(`token: ${localStorage.getItem('erp_token')}`);
-      navigate('/')
-    }
-
-  },[userMutation])
 
   const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -26,7 +15,16 @@ export default function Login(){
     const email = data.get('email') as string
     const password = data.get('password') as string
 
-    userMutation.mutate({email, password})
+    try{
+      const {user, token} = await userMutation.mutateAsync({email, password})
+      console.log(`Hi ${user.first_name}, you connected successfully`);
+      localStorage.setItem('erp_token', token);
+
+       navigate('/')
+    } catch(error){
+      console.error(`Login failed: ${error}`);
+    }
+    
 
   }
 
@@ -83,6 +81,7 @@ export default function Login(){
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
                 </div>
                 <p className="font-semibold text-red-600 hover:text-red-500">{userMutation.error?.message}</p>
+                {userMutation.isLoading && <p className="font-semibold text-green-600 hover:text-green-500">Loading...</p>}
               </div>
   
               <div>

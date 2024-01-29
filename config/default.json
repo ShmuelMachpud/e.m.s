@@ -1,3 +1,4 @@
 {
-    "JWT_KEY": "E.M.S_KEY"
+    "JWT_KEY": "E.M.S_KEY",
+    "TOKEN_GENERATOR": "E.M.S_KEY"
 }

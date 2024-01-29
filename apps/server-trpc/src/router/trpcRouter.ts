@@ -21,11 +21,11 @@ export const appRouter = router({
     }))
     .mutation((newUser) => employeesService.addEmployee(newUser)),
 
-    userByEmail: publicProcedure.input(z.object({
+    login: publicProcedure.input(z.object({
       email: z.string(),
       password: z.string()
     }))
-    .mutation((user)=> usersService.userByEmail(user)),
+    .mutation((loginData)=> usersService.login(loginData)),
 
     addUser: publicProcedure.input(z.object({
       first_name: z.string(),

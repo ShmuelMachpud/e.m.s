@@ -4,6 +4,7 @@ import {generateAuthToken, verifyToken} from '../auth/Providers/jwt'
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from 'config'
 import { decode } from 'punycode';
+import { Mutation, useMutation } from '@tanstack/react-query';
 
 
 export const getAllUsers = async() => {
@@ -27,27 +28,16 @@ export const addUser = async(newUser) => {
     }
 }
 
-export const userByEmail = async(user) => {
-    const email = user.input.email
-    const password = user.input.password
-    
-    
+export const login = async(loginData) => {
     try{
-        const user = await Dal.userByEmail(email)
-        console.log(password);
-        if(user.password === password){
+        const user = await Dal.userByEmail(loginData.input.email)
+        // console.log(`user:${JSON.stringify(user)}`);
+        if(loginData.input.password === user.password){
             const token = generateAuthToken(user)
-            if (token) {
-                try{
-                    const decoded = verifyToken(token)
-                    console.log(`decoded: ${decoded.id}`)
-                    // localStorage.setItem('jwt_key', decoded)
-                    user.userId = (decoded as JwtPayload);
-                    return ({user, token, decoded})
-                } catch(error){
-                    console.log(error);
-                }
-            }
+            console.log(`token: ${token}`);
+            console.log(`user: ${user}`);
+            return {user, token}
+
         }else {
             throw new Error(`The password is incorrect`)
         }

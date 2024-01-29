@@ -31,8 +31,11 @@ export const addUser = async(newUser) => {
 export const userByEmail = async(email):Promise<UserType |any> => {
     const user = await User.findByPk(email)
     if(!user){
+
         throw new Error ('User not found!')
+        
     } else{
+     
         return(user.dataValues);
         
     }
